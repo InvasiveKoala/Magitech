@@ -1,0 +1,83 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.clockwork",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "clockwork",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "clockwork",
+					"pivot": [0, 14, 0],
+					"cubes": [
+						{"origin": [-3, 9, -2], "size": [6, 10, 4], "uv": [0, 14]}
+					]
+				},
+				{
+					"name": "gear",
+					"parent": "body",
+					"pivot": [0, 14, 2],
+					"cubes": [
+						{"origin": [-5, 9, 2.02], "size": [10, 10, 0], "inflate": 0.01, "uv": [20, 14]}
+					]
+				},
+				{
+					"name": "leftleg",
+					"parent": "clockwork",
+					"pivot": [-2, 9, 0],
+					"cubes": [
+						{"origin": [-3, 0, -1], "size": [2, 9, 2], "uv": [8, 28]}
+					]
+				},
+				{
+					"name": "rightleg",
+					"parent": "clockwork",
+					"pivot": [2, 9, 0],
+					"cubes": [
+						{"origin": [1, 0, -1], "size": [2, 9, 2], "uv": [28, 0]}
+					]
+				},
+				{
+					"name": "leftarm",
+					"parent": "clockwork",
+					"pivot": [-3, 18, 0],
+					"cubes": [
+						{"origin": [-5, 9, -1], "size": [2, 10, 2], "uv": [0, 28]}
+					]
+				},
+				{
+					"name": "rightarm",
+					"parent": "clockwork",
+					"pivot": [3, 18, 0],
+					"cubes": [
+						{"origin": [3, 9, -1], "size": [2, 10, 2], "uv": [20, 24]}
+					]
+				},
+				{
+					"name": "itemrender",
+					"parent": "rightarm",
+					"pivot": [4, 11, -2],
+					"rotation": [0, -90, 0]
+				},
+				{
+					"name": "head",
+					"parent": "clockwork",
+					"pivot": [0, 19, 0],
+					"cubes": [
+						{"origin": [-4, 19, -3], "size": [8, 8, 6], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}
