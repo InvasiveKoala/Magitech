@@ -10,7 +10,7 @@ public class ModBlockLootTables extends BlockLoot {
     @Override
     protected void addTables() {
         dropSelf(BlockRegistry.TEST_BLOCK.get());
-
+        dropSelf(BlockRegistry.BRAIN_WORKBENCH.get());
         // Example for ores/blocks that dont always drop themself
         //add(BlockRegistry.TEST_BLOCK.get(), (block) -> createOreDrop(BlockRegistry.TEST_BLOCK.get(), RAW_ITEM))
     }

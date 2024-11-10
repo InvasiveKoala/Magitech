@@ -24,8 +24,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 
-// Only reason this extends LivingEntity is because geckolib requires it lol
-// I have no idea how to do animations solely in-code.
+
 public class MagicPlatformEntity extends LivingEntity implements IAnimatable {
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

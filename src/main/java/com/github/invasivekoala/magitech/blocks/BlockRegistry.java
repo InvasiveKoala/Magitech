@@ -1,6 +1,7 @@
 package com.github.invasivekoala.magitech.blocks;
 
 import com.github.invasivekoala.magitech.Magitech;
+import com.github.invasivekoala.magitech.blocks.entity.WorkbenchBlockEntity;
 import com.github.invasivekoala.magitech.items.ItemRegistry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,7 +22,8 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> TEST_BLOCK = registerBlock("test_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE)));
-
+    public static final RegistryObject<Block> BRAIN_WORKBENCH = registerBlock("brain_workbench",
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.of(Material.WOOD)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> blockReturn = BLOCKS.register(name, block);

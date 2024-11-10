@@ -2,7 +2,8 @@ package com.github.invasivekoala.magitech.items;
 
 import com.github.invasivekoala.magitech.Magitech;
 import com.github.invasivekoala.magitech.entities.EntityRegistry;
-import com.github.invasivekoala.magitech.items.aicores.AbstractAiCore;
+import com.github.invasivekoala.magitech.items.aicores.BrainItem;
+import com.github.invasivekoala.magitech.items.aicores.WanderAiCore;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.CreativeModeTab;
@@ -13,6 +14,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
 
 public class ItemRegistry {
 
@@ -26,8 +28,14 @@ public class ItemRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Magitech.MOD_ID);
     public static final RegistryObject<Item> CLOCK_BOOK = register("clock_book", 1);
-    //public static final RegistryObject<Item> AI_CORE = ITEMS.register("clockwork_ai_core",
-    //        () -> new AbstractAiCore(defaultProperties().stacksTo(1)));
+
+    public static final RegistryObject<Item> BRAIN_ITEM = ITEMS.register("ai_brain",
+            () -> new BrainItem(defaultProperties().stacksTo(1)));
+    public static final RegistryObject<Item> WANDER_AI_CORE = ITEMS.register("wander_ai_core",
+            () -> new WanderAiCore(defaultProperties().stacksTo(64)));
+    public static final RegistryObject<Item> BLANK_AI_CORE = register("blank_ai_core");
+
+
     public static final RegistryObject<Item> PLATFORM_CLOCK = ITEMS.register("platform_clock",
             () -> new PlatformClock(defaultProperties().stacksTo(1)));
 
@@ -40,12 +48,18 @@ public class ItemRegistry {
 
 
     // Methods that just make registering items easier
+    // -----------------------------------------------
+
+
     static RegistryObject<Item> register(String name){
         return register(name, 64);
     }
     static RegistryObject<Item> register(String name, int stack){
         return ITEMS.register(name, () -> new Item(defaultProperties().stacksTo(stack)));
     }
+
+
+
     public static <T extends Mob> RegistryObject<Item> registerSpawnEgg(String name, RegistryObject<EntityType<T>> entity, int bgColor, int highlightColor){
         return ITEMS.register(name, () -> new ForgeSpawnEggItem(entity, bgColor, highlightColor, defaultProperties()));
     }

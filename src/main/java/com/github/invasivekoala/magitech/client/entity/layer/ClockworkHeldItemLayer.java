@@ -1,4 +1,4 @@
-package com.github.invasivekoala.magitech.entities.client.layer;
+package com.github.invasivekoala.magitech.client.entity.layer;
 
 import com.github.invasivekoala.magitech.entities.clockwork.ClockworkEntity;
 import com.mojang.blaze3d.vertex.PoseStack;

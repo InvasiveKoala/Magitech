@@ -27,6 +27,12 @@ public class EntityRegistry {
                     .sized(3.0f, 1.0f)
                     .build(new ResourceLocation(Magitech.MOD_ID, "platform").toString()));
 
+
+    public static final RegistryObject<EntityType<BroomEntity>> BROOM = ENTITY_TYPES.register("broom",
+            () -> EntityType.Builder.of(BroomEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 0.5f)
+                    .build(new ResourceLocation(Magitech.MOD_ID, "broom").toString()));
+
     public static void register(IEventBus bus){
         ENTITY_TYPES.register(bus);
     }

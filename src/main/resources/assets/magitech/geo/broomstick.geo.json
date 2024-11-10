@@ -1,0 +1,31 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.broomstick",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 7,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "broomstick",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-1.5, 0, -5], "size": [3, 3, 24], "uv": [0, 0]},
+						{"origin": [-1.5, 1, -18], "size": [3, 3, 13], "uv": [30, 0]},
+						{"origin": [-3.5, -2, 19], "size": [7, 7, 10], "uv": [0, 27]}
+					]
+				},
+				{
+					"name": "riderPos",
+					"parent": "broomstick",
+					"pivot": [0, 3, 1]
+				}
+			]
+		}
+	]
+}

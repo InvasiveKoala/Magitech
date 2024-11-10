@@ -1,4 +1,4 @@
-package com.github.invasivekoala.magitech.entities.client;
+package com.github.invasivekoala.magitech.client.entity;
 
 import com.github.invasivekoala.magitech.entities.MagicPlatformEntity;
 import com.mojang.blaze3d.vertex.PoseStack;

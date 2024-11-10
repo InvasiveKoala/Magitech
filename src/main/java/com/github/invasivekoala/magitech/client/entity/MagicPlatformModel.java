@@ -1,4 +1,4 @@
-package com.github.invasivekoala.magitech.entities.client;
+package com.github.invasivekoala.magitech.client.entity;
 
 import com.github.invasivekoala.magitech.Magitech;
 import com.github.invasivekoala.magitech.entities.MagicPlatformEntity;

@@ -1,5 +1,18 @@
 {
   "item.magitech.clockwork_spawn_egg": "Clockwork Spawn Egg",
   "item.magitech.crystallized_shadow": "Crystallized Shadow",
-  "item.magitech.raw_shadow": "Raw Shadow"
+  "item.magitech.raw_shadow": "Raw Shadow",
+  "gui.magitech.braintitle": "AI Brain",
+  "gui.magitech.craftbrain": "Craft",
+  "word.magitech.wilt_translation": "Wilt",
+  "word.magitech.player_translation": "Player",
+  "error.magitech.wilt_subject": "The object must be a valid entity!",
+
+
+
+
+  "comment": "CURRENTLY, TRANSLATIONS OF SPELL WORDS FOR OTHER LANGUAGES DO NOT WORK",
+  "": "These are the latin translations of words which you use to cast spells. Don't change these unless your language does not have access to English characters.",
+  "word.magitech.wilt": "mori",
+  "word.magitech.player": "me"
 }

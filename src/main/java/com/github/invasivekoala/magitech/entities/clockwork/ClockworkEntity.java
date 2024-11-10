@@ -46,12 +46,6 @@ public class ClockworkEntity extends TamableAnimal implements IAnimatable {
     // Tick Behavior
     // -----------------------------
 
-    @Override
-    public void tick() {
-        super.tick();
-        String prefix = (level.isClientSide)? "Client Says:" : "Server Says:";
-        System.out.println(prefix + getHeldItem().toString());
-    }
 
 
     // -----------------------------

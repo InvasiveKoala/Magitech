@@ -1,35 +1,32 @@
 package com.github.invasivekoala.magitech;
 
 import com.github.invasivekoala.magitech.blocks.BlockRegistry;
+import com.github.invasivekoala.magitech.blocks.entity.BlockEntityRegistry;
+import com.github.invasivekoala.magitech.client.entity.BroomRenderer;
+import com.github.invasivekoala.magitech.client.screen.AiBrainScreen;
+import com.github.invasivekoala.magitech.containers.ContainerRegistry;
 import com.github.invasivekoala.magitech.entities.EntityRegistry;
-import com.github.invasivekoala.magitech.entities.client.ClockworkRender;
-import com.github.invasivekoala.magitech.entities.client.MagicPlatformRender;
+import com.github.invasivekoala.magitech.client.entity.ClockworkRender;
+import com.github.invasivekoala.magitech.client.entity.MagicPlatformRender;
+import com.github.invasivekoala.magitech.events.ClientEvents;
 import com.github.invasivekoala.magitech.items.ItemRegistry;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.Container;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
-
-import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Magitech.MOD_ID)
 public class Magitech {
 
-    // Directly reference a slf4j logger
     public static final String MOD_ID = "magitech";
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -45,11 +42,14 @@ public class Magitech {
 
         eventBus.addListener(this::clientSetup);
 
+        ClientEvents.init();
 
         // Registries
         ItemRegistry.register(eventBus);
         BlockRegistry.register(eventBus);
         EntityRegistry.register(eventBus);
+        ContainerRegistry.register(eventBus);
+        BlockEntityRegistry.register(eventBus);
 
 
         // Register ourselves for server and other game events we are interested in
@@ -65,6 +65,9 @@ public class Magitech {
     private void clientSetup(final FMLClientSetupEvent event){
         EntityRenderers.register(EntityRegistry.CLOCKWORK.get(), ClockworkRender::new);
         EntityRenderers.register(EntityRegistry.MAGIC_PLATFORM.get(), MagicPlatformRender::new);
+        EntityRenderers.register(EntityRegistry.BROOM.get(), BroomRenderer::new);
+
+        MenuScreens.register(ContainerRegistry.AI_BRAIN_CONTAINER.get(), AiBrainScreen::new);
     }
 
     /*private void enqueueIMC(final InterModEnqueueEvent event) {
