@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 public class BroomModel<T extends BroomEntity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Magitech.MOD_ID, "broomstick"), "main");
-	private final ModelPart broomstick;
+	public final ModelPart broomstick;
 	public final ModelPart riderPos;
 
 	public BroomModel(ModelPart root) {
@@ -34,6 +34,11 @@ public class BroomModel<T extends BroomEntity> extends EntityModel<T> {
 		PartDefinition riderPos = broomstick.addOrReplaceChild("riderPos", CubeListBuilder.create(), PartPose.offset(0.0F, -3.0F, 1.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
+	}
+
+	public void setXRot(float rot){
+		broomstick.setRotation(rot, 0, 0);
+		riderPos.setRotation(rot, 0, 0);
 	}
 
 	@Override

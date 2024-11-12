@@ -10,6 +10,7 @@ import com.github.invasivekoala.magitech.client.entity.ClockworkRender;
 import com.github.invasivekoala.magitech.client.entity.MagicPlatformRender;
 import com.github.invasivekoala.magitech.events.ClientEvents;
 import com.github.invasivekoala.magitech.items.ItemRegistry;
+import com.github.invasivekoala.magitech.packets.PacketRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -44,6 +45,7 @@ public class Magitech {
 
         ClientEvents.init();
 
+        PacketRegistry.init();
         // Registries
         ItemRegistry.register(eventBus);
         BlockRegistry.register(eventBus);

@@ -34,6 +34,8 @@ public class ItemRegistry {
     public static final RegistryObject<Item> WANDER_AI_CORE = ITEMS.register("wander_ai_core",
             () -> new WanderAiCore(defaultProperties().stacksTo(64)));
     public static final RegistryObject<Item> BLANK_AI_CORE = register("blank_ai_core");
+    public static final RegistryObject<Item> BROOMSTICK = ITEMS.register("broomstick",
+            () -> new BroomItem(defaultProperties().stacksTo(1)));
 
 
     public static final RegistryObject<Item> PLATFORM_CLOCK = ITEMS.register("platform_clock",

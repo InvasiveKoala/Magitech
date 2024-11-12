@@ -1,6 +1,7 @@
 package com.github.invasivekoala.magitech.incantations;
 
 import com.github.invasivekoala.magitech.Magitech;
+import com.github.invasivekoala.magitech.incantations.exceptions.*;
 import com.github.invasivekoala.magitech.incantations.words.AdjectiveWord;
 import com.github.invasivekoala.magitech.incantations.words.NounWord;
 import com.github.invasivekoala.magitech.incantations.words.VerbWord;
@@ -10,11 +11,13 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = Magitech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class WordEvents {
+
+
+
     @SubscribeEvent
     public static void onSpeak(ServerChatEvent event){
         String[] splitString = event.getMessage().split("\\s+");
@@ -22,11 +25,16 @@ public class WordEvents {
 
         if (WordRegistry.VERBS.containsKey(splitString[0].toLowerCase())){
             // If the first word is a verb, begin parsing
-            parseSpell(event.getPlayer(), List.of(splitString));
+            try {
+                parseSpell(event.getPlayer(), List.of(splitString));
+            }
+            catch(IncantationException e){
+                e.printStackTrace();
+            }
         }
     }
 
-    public static void parseSpell(ServerPlayer player, List<String> words){
+    public static void parseSpell(ServerPlayer player, List<String> words) throws IncantationException {
         SentenceContext cxt = new SentenceContext(player);
         VerbWord verb = WordRegistry.VERBS.get(words.get(0).toLowerCase());
         cxt.verb = verb;
@@ -38,7 +46,7 @@ public class WordEvents {
         List<AdjectiveWord> tempAdjectiveList = new ArrayList<>();
         while (expectsSubject || expectsObject){
             index++;
-            Word currentWord = getWord(words, index);
+            Word currentWord = getWord(words, index); // TODO catch out of bounds error
             if (currentWord == null) break; // TODO Error! Not a word
 
             // If it's an adverb
@@ -49,15 +57,17 @@ public class WordEvents {
             }
             // If it's a noun
             else if (currentWord instanceof NounWord noun){
-                NounInstance<NounWord> winst = new NounInstance<>(noun);
+                NounInstance winst = new NounInstance(noun, index+1);
                 winst.adjectives = new ArrayList<>(tempAdjectiveList);
                 tempAdjectiveList.clear();
 
                 // If it's the subject
                 if (expectsSubject){
+                    if (!Word.compatible(verb.subjectTypes(), noun)) return; // TODO error! wrong noun type for subject
                     cxt.subject = winst;
                     expectsSubject = false;
                 } else if (expectsObject){
+                    if (!Word.compatible(verb.objectTypes(), noun)) return; // TODO error! wrong noun type for object
                     cxt.object = winst;
                     expectsObject = false;
                 } else {
@@ -67,6 +77,7 @@ public class WordEvents {
             }
         }
         verb.effect(cxt);
+
     }
     private static Word getWord(List<String> words, int index){
         return WordRegistry.WORDS.get(words.get(index));

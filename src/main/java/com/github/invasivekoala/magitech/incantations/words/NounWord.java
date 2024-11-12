@@ -1,13 +1,17 @@
 package com.github.invasivekoala.magitech.incantations.words;
 
-import com.github.invasivekoala.magitech.incantations.WordRegistry;
+import com.github.invasivekoala.magitech.incantations.SentenceContext;
+
 
 public abstract class NounWord<T> extends Word {
 
-    public NounWord(String id, WordRegistry.Types... t) {
+    public NounWord(String id, Word.Types t) {
         super(id, t);
     }
 
-    public abstract Class<T> nounClass();
+    public Class<T> nounClass(SentenceContext context){
+        return null;
+    }
+
 
 }

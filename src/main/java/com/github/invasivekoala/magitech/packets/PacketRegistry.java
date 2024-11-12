@@ -2,11 +2,12 @@ package com.github.invasivekoala.magitech.packets;
 
 import com.github.invasivekoala.magitech.Magitech;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-/*public final class PacketRegistry {
+public final class PacketRegistry {
 
     private static final String PROTOCOL_VERSION = "1";
 
@@ -15,7 +16,14 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
     public static void init(){
         int i = 0;
-        CHANNEL.messageBuilder(ServerboundCraftBrainPacket.class, i++, NetworkDirection.PLAY_TO_SERVER).add();
+        CHANNEL.messageBuilder(ClientboundPushPacket.class, i++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(ClientboundPushPacket::encode).decoder(ClientboundPushPacket::decode)
+                .consumer(ClientboundPushPacket::handle).add();
+    }
+
+
+    public static <MSG> void sendTo(MSG message, ServerPlayer player)
+    {
+        CHANNEL.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 }
-*/

@@ -1,14 +1,13 @@
 package com.github.invasivekoala.magitech.incantations.words;
 
 
-import com.github.invasivekoala.magitech.incantations.WordRegistry;
 
 public abstract class AdjectiveWord extends Word {
 
-    public AdjectiveWord(String id, WordRegistry.Types... t) {
+    public AdjectiveWord(String id, Word.Types t) {
         super(id, t);
     }
 
-    public boolean isPrimaryAdjective() {return false;}
+    public int adjectivePriority() {return 0;}
 
 }

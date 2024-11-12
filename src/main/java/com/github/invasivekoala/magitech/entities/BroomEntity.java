@@ -1,6 +1,7 @@
 package com.github.invasivekoala.magitech.entities;
 
 import com.github.invasivekoala.magitech.events.ClientEvents;
+import com.github.invasivekoala.magitech.items.ItemRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -9,19 +10,23 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 
 public class BroomEntity extends Entity {
     private static final float DECELERATION = -0.02f;
 
-    public BroomEntity(EntityType<BroomEntity> pEntityType, Level pLevel) {
+    public BroomEntity(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        blocksBuilding= true;
     }
+
+
     public double getPassengersRidingOffset() {
         return 0.1D;
     }
@@ -78,8 +83,8 @@ public class BroomEntity extends Entity {
     }
     private void clampRotation(Entity passenger){
         passenger.setYBodyRot(this.getYRot() + 90);
-        float clampedRot = Mth.clamp(passenger.getYRot(), -90 - getYRot(), 90 - getYRot());
-        passenger.yRotO = passenger.getYRot();
+        float clampedRot = Mth.clamp(passenger.getYRot(), 0 + getYRot(), 179 + getYRot());
+        //passenger.yRotO = passenger.getYRot();
         passenger.setYRot(clampedRot);
         passenger.setYHeadRot(passenger.getYRot());
     }
@@ -155,13 +160,16 @@ public class BroomEntity extends Entity {
 
 
     float currentRidingSpeed = 0.0f;
-    private float deltaRotation;
+    private float deltaYRotation;
+    private float deltaXRotation;
     private void controlBroom(){
         if (this.isVehicle()){
 
             float acceleration;
-            if (ClientEvents.getClient().options.keyLeft.isDown()) deltaRotation++;
-            if (ClientEvents.getClient().options.keyRight.isDown()) deltaRotation--;
+            if (ClientEvents.getClient().options.keyLeft.isDown()) deltaYRotation++;
+            if (ClientEvents.getClient().options.keyRight.isDown()) deltaYRotation--;
+            if (ClientEvents.getClient().options.keyJump.isDown()) deltaXRotation--; // TODO custom keys
+            if (ClientEvents.getClient().options.keySprint.isDown()) deltaXRotation++;
 
             if (ClientEvents.getClient().options.keyUp.isDown())
             {
@@ -171,10 +179,12 @@ public class BroomEntity extends Entity {
             } else {
                 acceleration = DECELERATION;
             }
-            deltaRotation *= 0.8;
-            this.setYRot(getYRot() + deltaRotation);
+            deltaYRotation *= 0.8;
+            deltaXRotation *= 0.6;
+            this.setYRot(getYRot() + deltaYRotation);
+            this.setXRot(getXRot() + deltaXRotation);
 
-            Vec3 lookVec = Vec3.directionFromRotation(getXRot(), -getYRot());
+            Vec3 lookVec = getForward().multiply(-1.0, 1.0, -1.0);
             currentRidingSpeed = Mth.clamp(currentRidingSpeed + acceleration, 0f, 0.5f);
             this.setDeltaMovement(lookVec.scale(currentRidingSpeed));
         }
@@ -183,4 +193,23 @@ public class BroomEntity extends Entity {
             currentRidingSpeed = Mth.clamp(currentRidingSpeed + DECELERATION, 0f, 0.5f);
         }
     }
+
+    @Nullable
+    @Override
+    public Entity getControllingPassenger() {
+        if (getPassengers().isEmpty()) return null;
+        return getPassengers().get(0);
+    }
+
+    @Override
+    public Vec3 getDismountLocationForPassenger(LivingEntity pPassenger) {
+        Vec3 vec = super.getDismountLocationForPassenger(pPassenger);
+        if (pPassenger instanceof Player p){
+            p.addItem(new ItemStack(ItemRegistry.BROOMSTICK.get()));
+            kill();
+        }
+        return vec;
+    }
+
+
 }

@@ -18,8 +18,12 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.Vec3;
 
 public class BroomRenderer<T extends BroomEntity> extends EntityRenderer<T> {
     public static final ResourceLocation BROOM_TEXTURE = new ResourceLocation(Magitech.MOD_ID, "textures/entity/broomstick.png");
@@ -43,7 +47,9 @@ public class BroomRenderer<T extends BroomEntity> extends EntityRenderer<T> {
 
         pPoseStack.scale(-1.0F, -1.0F, 1.0F);
 
-        pPoseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - pEntityYaw));
+        pPoseStack.mulPose(Vector3f.YP.rotationDegrees(pEntityYaw));
+        model.setXRot(Mth.DEG_TO_RAD * pEntity.getXRot()); // We translate the model instead because the axes act weird when rotated together
+
 
         VertexConsumer vertexconsumer = pBuffer.getBuffer(model.renderType(BROOM_TEXTURE));
         model.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
@@ -64,11 +70,9 @@ public class BroomRenderer<T extends BroomEntity> extends EntityRenderer<T> {
 
             ClientEvents.broomRiders.remove(passenger.getUUID());
             //float riderYaw = passenger.yRotO + (passenger.getYRot() - passenger.yRotO) * partialTicks;
-
-            float riderYaw = broom.getYRot();
             translateToBody(matrixStackIn, model, 1, broom, passenger); // TODO maybe make this only activate on needed frames? EDIT: Probably not, each animation is different and it wouldn't be worth it
             matrixStackIn.pushPose();
-            matrixStackIn.mulPose(new Quaternion(Vector3f.YP, riderYaw, true));
+            //matrixStackIn.mulPose(new Quaternion(Vector3f.YP, riderYaw, true));
             renderEntity(passenger, partialTicks, matrixStackIn, bufferIn, packedLightIn);
             matrixStackIn.popPose();
             ClientEvents.broomRiders.add(passenger.getUUID());
@@ -82,16 +86,19 @@ public class BroomRenderer<T extends BroomEntity> extends EntityRenderer<T> {
         // Get the rider bone, which should be present if the passenger is able to get to this spot.
         ModelPart bone = model.riderPos;
         Vector3d modelPos = new Vector3d(bone.x, bone.y, bone.z);
+
+        // Handle x rotation,
+        Vector3f vecToRotate = new Vector3f(Vec3.directionFromRotation(0, broom.getYRot()+90));
+        stack.mulPose(vecToRotate.rotationDegrees(broom.getXRot()));
         // Scale by 1/16 to get from block bench coordinates to minecraft coordinates.
         modelPos.scale(0.0625f);
 
-        // Reverse bcs minecraft is weird
-        stack.mulPose(Vector3f.YP.rotationDegrees(broom.getYRot()));
+        // X rotation
         // Translate the player accordingly
         stack.translate(modelPos.x, modelPos.y, modelPos.z);
 
 
-        stack.mulPose(Quaternion.fromXYZ(bone.xRot, bone.yRot, bone.zRot));
+        //stack.mulPose(Quaternion.fromXYZ(bone.xRot, bone.yRot, bone.zRot));
 
 
 

@@ -2,7 +2,10 @@ package com.github.invasivekoala.magitech.incantations.words;
 
 
 import com.github.invasivekoala.magitech.incantations.SentenceContext;
+import com.github.invasivekoala.magitech.incantations.exceptions.*;
 import net.minecraft.network.chat.TranslatableComponent;
+
+import java.util.List;
 
 public abstract class VerbWord extends Word{
 
@@ -10,7 +13,7 @@ public abstract class VerbWord extends Word{
         super(id);
     }
 
-    public abstract boolean effect(SentenceContext context);
+    public abstract boolean effect(SentenceContext context) throws IncantationException;
 
     public boolean hasSubject(){
         return false;
@@ -19,23 +22,15 @@ public abstract class VerbWord extends Word{
         return true;
     }
 
-    public boolean subjectIsValid(SentenceContext cxt){
-        return false;
+    public List<Types> subjectTypes(){
+        return List.of(Types.ENTITY);
     }
-    public boolean objectIsValid(SentenceContext cxt){
-        return false;
-    }
-
-    public TranslatableComponent errorSubjectInvalid(SentenceContext cxt){
-        return new TranslatableComponent("error.magitech."+translated()+"_subject");
-    }
-    public TranslatableComponent errorObjectInvalid(SentenceContext cxt){
-        return new TranslatableComponent("error.magitech."+translated()+"_object");
+    public List<Types> objectTypes(){
+        return List.of(Types.ENTITY);
     }
 
-    // Whether the object of the sentence is a specific thing, or an abstract noun
-    // Ex. "Attack Nearby pigs" is referring to specific things already in the world. "Summon Pig" is not something already in the world.
-    public boolean specificObject(){
-        return true;
-    }
+    public int subjectLimit(){ return 999;}
+    public int objectLimit(){ return 999;}
+
+
 }

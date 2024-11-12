@@ -16,6 +16,5 @@ public class ModEventBusEvents {
     public static void entityAttributeEvent(EntityAttributeCreationEvent event){
         event.put(EntityRegistry.CLOCKWORK.get(), ClockworkEntity.setAttributes());
         event.put(EntityRegistry.MAGIC_PLATFORM.get(), MagicPlatformEntity.setAttributes());
-        event.put(EntityRegistry.BROOM.get(), LivingEntity.createLivingAttributes().build());
     }
 }
