@@ -2,6 +2,7 @@ package com.github.invasivekoala.magitech.incantations.words;
 
 import com.github.invasivekoala.magitech.packets.ClientboundPushPacket;
 import com.github.invasivekoala.magitech.packets.PacketRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +17,7 @@ public abstract class Word {
         ENTITY,
         BLOCK,
         DIRECTION,
+        TYPE,
         ANY
     }
 
@@ -47,16 +49,31 @@ public abstract class Word {
 
     public static void push(Entity e, Vec3 direction){
         if (!(e instanceof ServerPlayer se))
-            e.push(0, 1.0f, 0);
+            e.push(direction.x, direction.y, direction.z);
 
         else { // Since we're serverside we have to send this annoying packet instead
-            PacketRegistry.sendTo(new ClientboundPushPacket(new Vec3(0, 1.0f, 0)), se);
+            PacketRegistry.sendTo(new ClientboundPushPacket(new Vec3(direction.x, direction.y, direction.z)), se);
         }
     }
 
     public static boolean compatible(List<Types> verbTypes, NounWord<?> nounType){
         if (nounType.classification == Types.ANY) return true;
         return verbTypes.contains(nounType.classification);
+    }
+
+    protected static Vec3 getPosition(Object obj, boolean eye){
+        if (obj instanceof BlockPos b){
+            return new Vec3(b.getX(), b.getY(), b.getZ());
+        }
+        else if (obj instanceof Entity e){
+            if (eye) return e.getEyePosition();
+            return e.position();
+        }
+        return null;
+    }
+
+    protected static Vec3 getPosition(Object obj){
+        return getPosition(obj, true);
     }
 
 }

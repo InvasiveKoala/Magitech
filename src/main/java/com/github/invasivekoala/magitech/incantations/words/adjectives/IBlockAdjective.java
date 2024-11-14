@@ -9,6 +9,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public interface IBlockAdjective {
+public interface IBlockAdjective{
     List<BlockPos> narrowBlockDown(List<BlockPos> currentList, SentenceContext cxt, NounWord<BlockPos> noun);
 }

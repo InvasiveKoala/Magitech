@@ -19,6 +19,9 @@ public final class PacketRegistry {
         CHANNEL.messageBuilder(ClientboundPushPacket.class, i++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(ClientboundPushPacket::encode).decoder(ClientboundPushPacket::decode)
                 .consumer(ClientboundPushPacket::handle).add();
+        CHANNEL.messageBuilder(ClientboundDropItemPacket.class, i++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(ClientboundDropItemPacket::encode).decoder(ClientboundDropItemPacket::decode)
+                .consumer(ClientboundDropItemPacket::handle).add();
     }
 
 

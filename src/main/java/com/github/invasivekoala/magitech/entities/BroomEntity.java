@@ -182,7 +182,7 @@ public class BroomEntity extends Entity {
             deltaYRotation *= 0.8;
             deltaXRotation *= 0.6;
             this.setYRot(getYRot() + deltaYRotation);
-            this.setXRot(getXRot() + deltaXRotation);
+            this.setXRot(Mth.clamp(getXRot() + deltaXRotation, -50, 50));
 
             Vec3 lookVec = getForward().multiply(-1.0, 1.0, -1.0);
             currentRidingSpeed = Mth.clamp(currentRidingSpeed + acceleration, 0f, 0.5f);

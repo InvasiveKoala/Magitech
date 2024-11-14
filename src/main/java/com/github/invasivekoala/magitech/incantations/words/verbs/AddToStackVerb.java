@@ -15,10 +15,9 @@ public class AddToStackVerb extends VerbWord {
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {
-        for (Object object : context.object.getThing(context) ){
-            Deque<Object> deq = MemoryUtil.getOrCreateMemory(context.playerCaster.getUUID());
-            deq.push(object);
-        }
+        Deque<Object> deq = MemoryUtil.getOrCreateMemory(context.playerCaster.getUUID());
+        deq.addAll(context.object.getThing(context));
+
         return true;
     }
 

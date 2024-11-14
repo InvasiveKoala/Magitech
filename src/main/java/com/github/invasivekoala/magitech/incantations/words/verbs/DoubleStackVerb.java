@@ -1,31 +1,31 @@
 package com.github.invasivekoala.magitech.incantations.words.verbs;
 
+import com.github.invasivekoala.magitech.incantations.MemoryUtil;
 import com.github.invasivekoala.magitech.incantations.SentenceContext;
 import com.github.invasivekoala.magitech.incantations.exceptions.IncantationException;
 import com.github.invasivekoala.magitech.incantations.words.VerbWord;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Explosion;
 
+import java.util.Deque;
 import java.util.List;
 
-public class ExplodeVerb extends VerbWord {
-    public ExplodeVerb(String id) {
+public class DoubleStackVerb extends VerbWord {
+    public DoubleStackVerb(String id) {
         super(id);
     }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {
-        for(Object object : context.object.getThing(context)){
-            if (object instanceof BlockPos bp){
-                context.level.explode(null, bp.getX(), bp.getY(), bp.getZ(), 2f, Explosion.BlockInteraction.BREAK);
-            }
+        for (Object object : context.object.getThing(context) ){
+            Deque<Object> deq = MemoryUtil.getOrCreateMemory(context.playerCaster.getUUID());
+            for (int i =0;i<2;i++)
+                deq.push(object);
         }
         return true;
     }
 
+
     @Override
     public List<Types> objectTypes() {
-        return List.of(Types.BLOCK);
+        return List.of(Types.values());
     }
 }

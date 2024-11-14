@@ -26,19 +26,17 @@ public class PushVerb extends VerbWord {
         {
             if (!(pushee instanceof Entity pushedEntity)) throw new IncantationException(context.subject.wordNumber, IncantationException.WRONG_NOUN);
             Vec3 direction = null;
-            if (context.object.wordSingleton instanceof DirectionNoun dn) {
-                DirectionNoun.checkDirection(context.object);
-                direction = dn.getDirection(context, pushedEntity);
 
-            } else if (context.object.wordSingleton instanceof GenericEntityNoun) {
-                List<Object> objects = context.object.getThing(context);
-                if (objects.size() > subjectLimit()) throw new IncantationException(context.object.wordNumber, IncantationException.OVER_ENTITY_LIMIT);
-                if (objects.isEmpty()) throw new IncantationException(context.object.wordNumber, IncantationException.NO_TARGET_FOUND);
-                Entity e = (Entity) objects.get(0);
-                direction = e.position().subtract(pushedEntity.position()).normalize();
+            List<Object> objects = context.object.getThing(context, context.playerCaster);
+            if (objects.size() > objectLimit()) throw new IncantationException(context.object.wordNumber, IncantationException.OVER_ENTITY_LIMIT);
+            if (objects.isEmpty()) throw new IncantationException(context.object.wordNumber, IncantationException.NO_TARGET_FOUND);
+
+            if (objects.get(0) instanceof Vec3 v) {
+                direction = v;
+            } else if (objects.get(0) instanceof Entity e) {
+                direction = e.position().subtract(pushedEntity.position()).normalize().scale(2);
             }
             if (direction == null) throw new IncantationException(context.subject.wordNumber, IncantationException.WRONG_NOUN); // Maybe not needed?
-            direction.scale(2.0f);
 
 
             push(pushedEntity, direction);
@@ -55,7 +53,7 @@ public class PushVerb extends VerbWord {
     }
 
     @Override
-    public int subjectLimit() {
+    public int objectLimit() {
         return 1;
     }
 

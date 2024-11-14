@@ -43,7 +43,7 @@ public class WordEvents {
 
         int index = 0;
 
-        List<AdjectiveWord> tempAdjectiveList = new ArrayList<>();
+        Set<AdjectiveWord> tempAdjectiveList = new HashSet<>();
         while (expectsSubject || expectsObject){
             index++;
             Word currentWord = getWord(words, index); // TODO catch out of bounds error
@@ -52,23 +52,25 @@ public class WordEvents {
             // If it's an adverb
             // If it's an adjective
             if (currentWord instanceof AdjectiveWord adj){
-                if (tempAdjectiveList.contains(adj)) continue; // TODO error! repeated adjective
+                //if (tempAdjectiveList.contains(adj)) continue; // We need repeated adjectives
                 tempAdjectiveList.add(adj);
             }
             // If it's a noun
             else if (currentWord instanceof NounWord noun){
                 NounInstance winst = new NounInstance(noun, index+1);
-                winst.adjectives = new ArrayList<>(tempAdjectiveList);
+                winst.adjectives = new HashSet<>(tempAdjectiveList);
                 tempAdjectiveList.clear();
 
                 // If it's the subject
                 if (expectsSubject){
                     if (!Word.compatible(verb.subjectTypes(), noun)) return; // TODO error! wrong noun type for subject
                     cxt.subject = winst;
+                    winst.isSubject = true;
                     expectsSubject = false;
                 } else if (expectsObject){
                     if (!Word.compatible(verb.objectTypes(), noun)) return; // TODO error! wrong noun type for object
                     cxt.object = winst;
+                    winst.isSubject = false;
                     expectsObject = false;
                 } else {
                     return;

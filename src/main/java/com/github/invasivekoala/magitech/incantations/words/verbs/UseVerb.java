@@ -4,17 +4,20 @@ import com.github.invasivekoala.magitech.incantations.SentenceContext;
 import com.github.invasivekoala.magitech.incantations.exceptions.IncantationException;
 import com.github.invasivekoala.magitech.incantations.words.VerbWord;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class BloomVerb extends VerbWord {
-    public BloomVerb(String id) {
+public class UseVerb extends VerbWord {
+    public UseVerb(String id) {
         super(id);
     }
 
@@ -23,14 +26,9 @@ public class BloomVerb extends VerbWord {
         for (Object object : context.object.getThing(context) ){
             if (object instanceof BlockPos bs){
                 BlockState state = context.level.getBlockState(bs);
-                if (!(state.getBlock() instanceof BonemealableBlock bmable)) return false;
-                if (bmable.isValidBonemealTarget(context.level, bs, state, false)) {
-                    if (bmable.isBonemealSuccess(context.level, context.level.random, bs, state)) {
-                        bmable.performBonemeal(context.level, context.level.random, bs, state);
-                    }
-                }
-            } else if (object instanceof LivingEntity le){
-                le.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200));
+                state.use(context.level, context.playerCaster, InteractionHand.MAIN_HAND, new BlockHitResult(Vec3.atCenterOf(bs), Direction.NORTH, bs, true));
+            } else if (object instanceof LivingEntity e){
+                e.interact(context.playerCaster, InteractionHand.MAIN_HAND);
             }
         }
         return true;

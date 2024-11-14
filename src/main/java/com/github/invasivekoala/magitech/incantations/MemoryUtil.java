@@ -12,8 +12,5 @@ public class MemoryUtil {
         if (!MEMORY_MAP.containsKey(uuid)) MEMORY_MAP.put(uuid, new ArrayDeque<>());
         return MEMORY_MAP.get(uuid);
     }
-    public static Deque<Object> getMemory(UUID uuid){
-        return MEMORY_MAP.get(uuid);
-    }
 
 }

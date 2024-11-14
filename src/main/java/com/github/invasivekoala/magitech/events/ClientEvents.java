@@ -8,6 +8,7 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -44,7 +45,6 @@ public class ClientEvents {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event){
         event.registerLayerDefinition(BroomModel.LAYER_LOCATION, BroomModel::createBodyLayer);
     }
-
     public static Minecraft getClient(){
         return Minecraft.getInstance();
     }
