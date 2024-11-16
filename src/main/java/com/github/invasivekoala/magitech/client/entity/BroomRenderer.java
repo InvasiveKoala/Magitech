@@ -2,11 +2,9 @@ package com.github.invasivekoala.magitech.client.entity;
 
 import com.github.invasivekoala.magitech.Magitech;
 import com.github.invasivekoala.magitech.entities.BroomEntity;
-
 import com.github.invasivekoala.magitech.events.ClientEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3d;
 import com.mojang.math.Vector3f;
 import net.minecraft.CrashReport;
@@ -18,8 +16,6 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

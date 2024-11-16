@@ -1,7 +1,7 @@
 package com.github.invasivekoala.magitech.client.entity;
 
-import com.github.invasivekoala.magitech.entities.clockwork.ClockworkEntity;
 import com.github.invasivekoala.magitech.client.entity.layer.ClockworkHeldItemLayer;
+import com.github.invasivekoala.magitech.entities.clockwork.ClockworkEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

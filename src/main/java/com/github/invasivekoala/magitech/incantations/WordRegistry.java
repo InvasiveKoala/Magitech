@@ -2,9 +2,9 @@ package com.github.invasivekoala.magitech.incantations;
 
 import com.github.invasivekoala.magitech.incantations.words.VerbWord;
 import com.github.invasivekoala.magitech.incantations.words.Word;
-import com.github.invasivekoala.magitech.incantations.words.adjectives.RaytraceAdjective;
 import com.github.invasivekoala.magitech.incantations.words.adjectives.NearbyAdjective;
 import com.github.invasivekoala.magitech.incantations.words.adjectives.NearestAdjective;
+import com.github.invasivekoala.magitech.incantations.words.adjectives.RaytraceAdjective;
 import com.github.invasivekoala.magitech.incantations.words.nouns.BlockNoun;
 import com.github.invasivekoala.magitech.incantations.words.nouns.DirectionNoun;
 import com.github.invasivekoala.magitech.incantations.words.nouns.GenericEntityNoun;
@@ -52,6 +52,7 @@ public class WordRegistry {
         registerVerb("conjuro", new ConjureVerb("conjure"));
         registerVerb("impetum", new TargetVerb("target"));
         registerVerb("usus", new UseVerb("use"));
+        registerVerb("curare", new CureVerb("cure"));
         // Entity Nouns
         register("me", new GenericEntityNoun<>("player", EntityType.PLAYER));
         register("bovis", new GenericEntityNoun<>("cow", EntityType.COW));
@@ -66,7 +67,7 @@ public class WordRegistry {
 
         // Adjectives
         register("prope", new NearbyAdjective("nearby"));
-        register("proximus", new NearestAdjective("nearest"));
+        register("proxi", new NearestAdjective("nearest"));
         //register("quod", new EntityRaytraceAdjective("that_entity"));
         register("hoc", new RaytraceAdjective("that_block"));
 

@@ -12,31 +12,20 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class BloomVerb extends VerbWord {
-    public BloomVerb(String id) {
+public class CureVerb extends VerbWord {
+    public CureVerb(String id) {
         super(id);
     }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {
         for (Object object : context.object.getThing(context) ){
-            if (object instanceof BlockPos bs){
-                BlockState state = context.level.getBlockState(bs);
-                if (!(state.getBlock() instanceof BonemealableBlock bmable)) return false;
-                if (bmable.isValidBonemealTarget(context.level, bs, state, false)) {
-                    if (bmable.isBonemealSuccess(context.level, context.level.random, bs, state)) {
-                        bmable.performBonemeal(context.level, context.level.random, bs, state);
-                    }
-                }
-            } else if (object instanceof LivingEntity le){
-                le.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200));
+            if (object instanceof LivingEntity le){
+                le.removeAllEffects();
             }
         }
         return true;
     }
 
-    @Override
-    public List<Types> objectTypes() {
-        return List.of(Types.ENTITY, Types.BLOCK);
-    }
+
 }

@@ -1,7 +1,7 @@
 package com.github.invasivekoala.magitech.incantations;
 
 import com.github.invasivekoala.magitech.Magitech;
-import com.github.invasivekoala.magitech.incantations.exceptions.*;
+import com.github.invasivekoala.magitech.incantations.exceptions.IncantationException;
 import com.github.invasivekoala.magitech.incantations.words.AdjectiveWord;
 import com.github.invasivekoala.magitech.incantations.words.NounWord;
 import com.github.invasivekoala.magitech.incantations.words.VerbWord;
@@ -11,7 +11,9 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = Magitech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class WordEvents {

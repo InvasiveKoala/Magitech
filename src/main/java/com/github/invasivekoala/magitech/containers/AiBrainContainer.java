@@ -2,7 +2,6 @@ package com.github.invasivekoala.magitech.containers;
 
 import com.github.invasivekoala.magitech.blocks.BlockRegistry;
 import com.github.invasivekoala.magitech.blocks.entity.WorkbenchBlockEntity;
-import com.github.invasivekoala.magitech.items.ItemRegistry;
 import com.github.invasivekoala.magitech.items.aicores.AbstractAiCore;
 import com.github.invasivekoala.magitech.items.aicores.BrainItem;
 import net.minecraft.core.BlockPos;

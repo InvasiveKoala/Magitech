@@ -1,7 +1,6 @@
 package com.github.invasivekoala.magitech.blocks;
 
 import com.github.invasivekoala.magitech.Magitech;
-import com.github.invasivekoala.magitech.blocks.entity.WorkbenchBlockEntity;
 import com.github.invasivekoala.magitech.items.ItemRegistry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

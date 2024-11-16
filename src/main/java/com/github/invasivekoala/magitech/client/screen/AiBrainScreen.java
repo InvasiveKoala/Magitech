@@ -1,7 +1,6 @@
 package com.github.invasivekoala.magitech.client.screen;
 
 import com.github.invasivekoala.magitech.Magitech;
-import com.github.invasivekoala.magitech.blocks.entity.WorkbenchBlockEntity;
 import com.github.invasivekoala.magitech.containers.AiBrainContainer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;

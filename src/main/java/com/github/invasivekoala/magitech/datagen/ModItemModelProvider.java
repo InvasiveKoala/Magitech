@@ -2,7 +2,6 @@ package com.github.invasivekoala.magitech.datagen;
 
 import com.github.invasivekoala.magitech.Magitech;
 import com.github.invasivekoala.magitech.items.ItemRegistry;
-import net.minecraft.core.NonNullList;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -17,7 +16,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

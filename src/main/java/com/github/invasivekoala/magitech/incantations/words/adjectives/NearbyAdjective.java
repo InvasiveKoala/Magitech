@@ -6,13 +6,10 @@ import com.github.invasivekoala.magitech.incantations.words.NounWord;
 import com.github.invasivekoala.magitech.incantations.words.nouns.GenericEntityNoun;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
 
 public class NearbyAdjective extends AdjectiveWord implements IEntityAdjective, IBlockAdjective {
     public NearbyAdjective(String id) {

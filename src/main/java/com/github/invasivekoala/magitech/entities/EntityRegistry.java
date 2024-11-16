@@ -3,7 +3,6 @@ package com.github.invasivekoala.magitech.entities;
 import com.github.invasivekoala.magitech.Magitech;
 import com.github.invasivekoala.magitech.entities.clockwork.ClockworkEntity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;

@@ -36,6 +36,8 @@ public class ItemRegistry {
     public static final RegistryObject<Item> BLANK_AI_CORE = register("blank_ai_core");
     public static final RegistryObject<Item> BROOMSTICK = ITEMS.register("broomstick",
             () -> new BroomItem(defaultProperties().stacksTo(1)));
+    public static final RegistryObject<Item> HEXICON = ITEMS.register("hexicon",
+            () -> new HexiconItem(defaultProperties().stacksTo(1)));
 
 
     public static final RegistryObject<Item> PLATFORM_CLOCK = ITEMS.register("platform_clock",

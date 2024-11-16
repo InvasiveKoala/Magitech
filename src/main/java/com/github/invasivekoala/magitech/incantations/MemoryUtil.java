@@ -1,6 +1,9 @@
 package com.github.invasivekoala.magitech.incantations;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class MemoryUtil {
 

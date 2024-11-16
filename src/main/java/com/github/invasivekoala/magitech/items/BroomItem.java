@@ -23,6 +23,11 @@ public class BroomItem extends Item {
             ServerLevel lvl = (ServerLevel) pLevel;
 
             Entity e = EntityRegistry.BROOM.get().spawn(lvl, stack, pPlayer, pPlayer.blockPosition(), MobSpawnType.SPAWN_EGG, false, false);
+            if (e == null) return InteractionResultHolder.pass(stack);
+            e.setYRot(-pPlayer.getYRot());
+            e.setXRot(pPlayer.getXRot());
+            e.setDeltaMovement(pPlayer.getDeltaMovement());
+
             pPlayer.startRiding(e);
 
             stack.shrink(1);

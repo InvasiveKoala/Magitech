@@ -7,7 +7,6 @@ import com.github.invasivekoala.magitech.incantations.words.nouns.GenericEntityN
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.Optional;

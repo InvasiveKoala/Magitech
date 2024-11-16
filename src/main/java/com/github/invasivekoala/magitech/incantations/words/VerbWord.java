@@ -2,8 +2,7 @@ package com.github.invasivekoala.magitech.incantations.words;
 
 
 import com.github.invasivekoala.magitech.incantations.SentenceContext;
-import com.github.invasivekoala.magitech.incantations.exceptions.*;
-import net.minecraft.network.chat.TranslatableComponent;
+import com.github.invasivekoala.magitech.incantations.exceptions.IncantationException;
 
 import java.util.List;
 

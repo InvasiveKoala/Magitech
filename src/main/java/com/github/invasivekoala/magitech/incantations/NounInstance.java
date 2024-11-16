@@ -28,6 +28,9 @@ public class NounInstance {
         wordNumber = number;
     }
 
+
+    // Set b/c ordering doesn't matter here -- we use a priority system in the adjective class
+    // (getThing() should prob return a set as well but I think .get() is used somewhere? idk.)
     public Set<AdjectiveWord> adjectives;
 
 
@@ -39,7 +42,6 @@ public class NounInstance {
 
 
     // This is only run if the noun is a specific thing in the world -- otherwise, if it's a mob type, like (Pig) you would use #getType
-    @SuppressWarnings("unchecked") // we know its safe
     public <G> List<G> getThing(SentenceContext cxt) throws IncantationException {
         return getThing(cxt, null);
     }
@@ -72,7 +74,6 @@ public class NounInstance {
         return getThingGeneral(cxt, new ArrayList<>());
     }
 
-    @SuppressWarnings("unchecked")
     private <G> List<G> getThingGeneral(SentenceContext cxt, List<G> toReturn) throws IncantationException {
 
         HashMap<Integer, Set<AdjectiveWord>> adjMap = new HashMap<>();

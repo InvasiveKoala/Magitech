@@ -4,7 +4,6 @@ import com.github.invasivekoala.magitech.incantations.SentenceContext;
 import com.github.invasivekoala.magitech.incantations.exceptions.IncantationException;
 import com.github.invasivekoala.magitech.incantations.words.VerbWord;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Explosion;
 
 import java.util.List;

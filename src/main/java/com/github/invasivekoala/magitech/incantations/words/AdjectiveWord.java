@@ -8,6 +8,6 @@ public abstract class AdjectiveWord extends Word {
         super(id, Types.ANY);
     }
 
-    public int adjectivePriority() {return 0;}
+    public int adjectivePriority() {return 1;}
 
 }

@@ -3,6 +3,7 @@ package com.github.invasivekoala.magitech.incantations.words.nouns;
 
 import com.github.invasivekoala.magitech.incantations.exceptions.IncantationException;
 import com.github.invasivekoala.magitech.incantations.words.NounWord;
+
 import java.util.Deque;
 import java.util.List;
 import java.util.NoSuchElementException;

@@ -182,7 +182,7 @@ public class BroomEntity extends Entity {
             deltaYRotation *= 0.8;
             deltaXRotation *= 0.6;
             this.setYRot(getYRot() + deltaYRotation);
-            this.setXRot(Mth.clamp(getXRot() + deltaXRotation, -50, 50));
+            this.setXRot(Mth.clamp(getXRot() + deltaXRotation, -40, 40));
 
             Vec3 lookVec = getForward().multiply(-1.0, 1.0, -1.0);
             currentRidingSpeed = Mth.clamp(currentRidingSpeed + acceleration, 0f, 0.5f);
@@ -205,7 +205,10 @@ public class BroomEntity extends Entity {
     public Vec3 getDismountLocationForPassenger(LivingEntity pPassenger) {
         Vec3 vec = super.getDismountLocationForPassenger(pPassenger);
         if (pPassenger instanceof Player p){
-            p.addItem(new ItemStack(ItemRegistry.BROOMSTICK.get()));
+            ItemStack stack= new ItemStack(ItemRegistry.BROOMSTICK.get());
+            if (!p.addItem(stack)){
+                p.spawnAtLocation(stack);
+            }
             kill();
         }
         return vec;

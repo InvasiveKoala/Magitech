@@ -3,11 +3,6 @@ package com.github.invasivekoala.magitech.incantations.words.verbs;
 import com.github.invasivekoala.magitech.incantations.SentenceContext;
 import com.github.invasivekoala.magitech.incantations.exceptions.IncantationException;
 import com.github.invasivekoala.magitech.incantations.words.VerbWord;
-import com.github.invasivekoala.magitech.incantations.words.nouns.DirectionNoun;
-import com.github.invasivekoala.magitech.incantations.words.nouns.GenericEntityNoun;
-import com.github.invasivekoala.magitech.packets.ClientboundPushPacket;
-import com.github.invasivekoala.magitech.packets.PacketRegistry;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
