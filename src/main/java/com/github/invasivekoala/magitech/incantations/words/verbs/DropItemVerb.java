@@ -11,9 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 public class DropItemVerb extends VerbWord {
-    public DropItemVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

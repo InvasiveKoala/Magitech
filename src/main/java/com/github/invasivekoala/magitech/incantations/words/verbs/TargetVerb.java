@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TargetVerb extends VerbWord {
-    public TargetVerb(String id) {
-        super(id);
-    }
+
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

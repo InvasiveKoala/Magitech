@@ -11,8 +11,8 @@ import java.util.function.Function;
 
 public class StackNoun<T> extends NounWord<T> {
     private final Function<Deque<T>, List<T>> getter;
-    public StackNoun(String id, Function<Deque<T>, List<T>> dir) {
-        super(id, Types.ANY);
+    public StackNoun(Function<Deque<T>, List<T>> dir) {
+        super(Types.ANY);
         getter = dir;
     }
 

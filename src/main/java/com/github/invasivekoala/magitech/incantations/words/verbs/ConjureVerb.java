@@ -12,14 +12,12 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class ConjureVerb extends VerbWord {
-    public ConjureVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {
         List<Object> object = context.object.getThing(context, context.playerCaster);
-        if (object.size() > 1) throw new IncantationException(context.object.wordNumber, IncantationException.OVER_ENTITY_LIMIT);
+        if (object.size() > 1) throw new IncantationException(context.object.wordNumber, IncantationException.OVER_NOUN_LIMIT);
+        if (object.size() == 0 ) throw new IncantationException(context.object.wordNumber, IncantationException.NO_TARGET_FOUND);
         Vec3 pos;
         Object obj = object.get(0);
         if (obj instanceof Vec3 v)
@@ -31,7 +29,12 @@ public class ConjureVerb extends VerbWord {
         if (context.subject.wordSingleton instanceof GenericEntityNoun n){
             if (n.isConjurable()){
                 Entity e = n.entityType(context).spawn(context.level, null, context.playerCaster, new BlockPos(pos), MobSpawnType.MOB_SUMMONED, false, false);
-                if (e != null) e.setPos(pos);
+
+                if (e != null) {
+                    e.setPos(pos);
+                    e.setXRot(context.playerCaster.getXRot());
+                    e.setYRot(context.playerCaster.getYHeadRot());
+                }
 
             } else throw new IncantationException(context.subject.wordNumber, IncantationException.NOT_CONJURABLE);
         }

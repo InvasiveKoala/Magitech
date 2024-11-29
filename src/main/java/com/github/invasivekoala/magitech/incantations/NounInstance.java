@@ -11,6 +11,8 @@ import com.github.invasivekoala.magitech.incantations.words.nouns.DirectionNoun;
 import com.github.invasivekoala.magitech.incantations.words.nouns.GenericEntityNoun;
 import com.github.invasivekoala.magitech.incantations.words.nouns.StackNoun;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.*;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
@@ -20,12 +22,43 @@ import java.util.*;
 public class NounInstance {
 
     public final NounWord<?> wordSingleton;
-    public final int wordNumber;
+    public final byte wordNumber;
     public boolean isSubject;
     public int manaCost = 0;
-    public NounInstance(NounWord<?> word, int number){
+    public NounInstance(NounWord<?> word, byte number){
         wordSingleton = word;
         wordNumber = number;
+    }
+    public static CompoundTag toNbt(NounInstance noun){
+        CompoundTag tag = new CompoundTag();
+        tag.put("noun", StringTag.valueOf(noun.wordSingleton.registryName));
+
+        ListTag adjTag = new ListTag();
+        for (AdjectiveWord adj : noun.adjectives){
+            adjTag.add(StringTag.valueOf(adj.registryName));
+        }
+        tag.put("adjectives", adjTag);
+
+        tag.put("wordIndex", ByteTag.valueOf(noun.wordNumber));
+        return tag;
+    }
+    public static NounInstance fromNbt(CompoundTag tag){ // Im too lazy to add checks for this so if you use it wrong you're just stupid
+        String nounId = tag.getString("noun");
+        NounWord<?> nounWord = (NounWord<?>) WordRegistry.WORDS.get(nounId);
+
+        byte index = tag.getByte("wordIndex");
+
+        NounInstance noun = new NounInstance(nounWord,index);
+
+        ListTag adjTag = (ListTag) tag.get("adjectives");
+        if (adjTag == null) return noun;
+
+        Set<AdjectiveWord> adjectives = new HashSet<>();
+        for (Tag aTag : adjTag){
+            adjectives.add((AdjectiveWord) WordRegistry.WORDS.get(aTag.getAsString()));
+        }
+        noun.adjectives = adjectives;
+        return noun;
     }
 
 
@@ -67,7 +100,9 @@ public class NounInstance {
     private <G> List <G> getThingNonMemory(SentenceContext cxt) throws IncantationException{
         // If the noun is just "me" assume they mean the player caster
         if (adjectives.isEmpty()){
-            if (wordSingleton.registryName.equals("player")) return (List<G>) List.of(cxt.playerCaster);
+            if (wordSingleton.registryName.equals("me")) return (List<G>) List.of(cxt.playerCaster);
+            else if (wordSingleton.registryName.equals("origo")) return (List<G>) List.of(getSpellOrigin(cxt.playerCaster));
+
             throw new IncantationException(wordNumber, IncantationException.NOT_SPECIFIC_ENOUGH);
         }
 
@@ -79,12 +114,12 @@ public class NounInstance {
         HashMap<Integer, Set<AdjectiveWord>> adjMap = new HashMap<>();
         // First sort the adjectives based on priority.
         for (AdjectiveWord adjective : adjectives){
-            int p = adjective.adjectivePriority();
-            if (adjMap.get(p) == null){
+            int priority = adjective.adjectivePriority();
+            if (adjMap.get(priority) == null){
                 Set<AdjectiveWord> newList = new HashSet<>();
-                adjMap.put(p, newList);
+                adjMap.put(priority, newList);
             }
-            adjMap.get(p).add(adjective);
+            adjMap.get(priority).add(adjective);
         }
 
         // Priority
@@ -102,18 +137,23 @@ public class NounInstance {
     @SuppressWarnings("unchecked")
     private <G> List<G> narrowListGivenAdjective(SentenceContext cxt, List<G> toReturn, AdjectiveWord adjective) throws IncantationException {
         if (this.isEntity()){
-            if (!(adjective instanceof IEntityAdjective ea)) return toReturn;
-            toReturn = (List<G>) ea.narrowEntityDown((List<Entity>) toReturn, cxt, (GenericEntityNoun<Entity>) wordSingleton);
+            if (!(adjective instanceof IEntityAdjective adj)) return toReturn;
+            toReturn = (List<G>) adj.narrowEntityDown((List<Entity>) toReturn, cxt, (GenericEntityNoun<Entity>) wordSingleton);
         }
         else if (this.isBlock()){
-            if (!(adjective instanceof IBlockAdjective ea)) return toReturn;
-            toReturn = (List<G>) ea.narrowBlockDown((List<BlockPos>) toReturn, cxt, (NounWord<BlockPos>)wordSingleton);
+            if (!(adjective instanceof IBlockAdjective adj)) return toReturn;
+            toReturn = (List<G>) adj.narrowBlockDown((List<BlockPos>) toReturn, cxt, (NounWord<BlockPos>)wordSingleton);
         }
         else if (this.isDirection()){
-            if (!(adjective instanceof IDirectionAdjective ea)) return toReturn;
-            toReturn = (List<G>) ea.narrowItDown((List<Vec3>) toReturn, cxt, (NounWord<Vec3>)wordSingleton);
+            if (!(adjective instanceof IDirectionAdjective adj)) return toReturn;
+            toReturn = (List<G>) adj.narrowItDown((List<Vec3>) toReturn, cxt, (NounWord<Vec3>)wordSingleton);
         }
         return toReturn;
+    }
+
+    public BlockPos getSpellOrigin(ServerPlayer player) throws IncantationException {
+        if (!WordEvents.onGoingSpells.containsKey(player.getUUID())) throw new IncantationException(wordNumber, IncantationException.NO_SPELL_ORIGIN);
+        return WordEvents.onGoingSpells.get(player.getUUID()).origin;
     }
 
 

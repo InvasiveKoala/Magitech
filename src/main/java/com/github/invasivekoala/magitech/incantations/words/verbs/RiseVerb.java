@@ -7,9 +7,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
 public class RiseVerb extends VerbWord {
-    public RiseVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

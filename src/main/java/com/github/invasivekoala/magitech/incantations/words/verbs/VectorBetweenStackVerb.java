@@ -9,18 +9,15 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class VectorBetweenStackVerb extends VerbWord {
-    public VectorBetweenStackVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {
        List<Object> object = context.object.getThing(context);
-       if (object.size() > objectLimit()) throw new IncantationException(context.object.wordNumber, IncantationException.OVER_ENTITY_LIMIT);
+       if (object.size() > objectLimit()) throw new IncantationException(context.object.wordNumber, IncantationException.OVER_NOUN_LIMIT);
        List<Object> subject = context.subject.getThing(context);
-       if (subject.size() > subjectLimit()) throw new IncantationException(context.subject.wordNumber, IncantationException.OVER_ENTITY_LIMIT);
+       if (subject.size() > subjectLimit()) throw new IncantationException(context.subject.wordNumber, IncantationException.OVER_NOUN_LIMIT);
 
-       Vec3 ret = getPosition(object.get(0), false).subtract(getPosition(subject.get(0), false));
+       Vec3 ret = getPosition(object.get(0), false).subtract(getPosition(subject.get(0), false)).normalize();
        MemoryUtil.getOrCreateMemory(context.playerCaster.getUUID()).push(ret);
 
        return true;

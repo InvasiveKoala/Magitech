@@ -10,7 +10,8 @@ import com.github.invasivekoala.magitech.incantations.words.nouns.DirectionNoun;
 import com.github.invasivekoala.magitech.incantations.words.nouns.GenericEntityNoun;
 import com.github.invasivekoala.magitech.incantations.words.nouns.StackNoun;
 import com.github.invasivekoala.magitech.incantations.words.verbs.*;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
@@ -29,6 +30,7 @@ public class WordRegistry {
     public static final HashMap<String, VerbWord> VERBS = new HashMap<>();
 
     private static void register(String wordId, Word word){
+        word.registryName = wordId;
         WORDS.put(wordId, word);
     }
     private static void registerVerb(String wordId, VerbWord word){
@@ -38,58 +40,68 @@ public class WordRegistry {
 
     static{
         // Verbs
-        registerVerb("mori", new WiltVerb("wilt"));
-        registerVerb("adficio", new DrainVerb("drain"));
-        registerVerb("dis", new PushVerb("push"));
-        registerVerb("oriri", new RiseVerb("rise"));
-        registerVerb("florere", new BloomVerb("bloom"));
-        registerVerb("displodo", new ExplodeVerb("explode"));
-        registerVerb("memento", new AddToStackVerb("remember"));
-        registerVerb("oblivisci", new ClearStackVerb("forget"));
-        registerVerb("duplici", new DoubleStackVerb("double"));
-        registerVerb("lapsus", new DropItemVerb("drop"));
-        registerVerb("lineus", new VectorBetweenStackVerb("vector"));
-        registerVerb("conjuro", new ConjureVerb("conjure"));
-        registerVerb("impetum", new TargetVerb("target"));
-        registerVerb("usus", new UseVerb("use"));
-        registerVerb("curare", new CureVerb("cure"));
+        registerVerb("mori", new WiltVerb());
+        registerVerb("adficio", new DrainVerb());
+        registerVerb("dis", new PushVerb());
+        registerVerb("oriri", new RiseVerb());
+        registerVerb("florere", new BloomVerb());
+        registerVerb("displodo", new ExplodeVerb());
+        registerVerb("memento", new AddToStackVerb());
+        registerVerb("oblivisci", new ClearStackVerb());
+        registerVerb("duplico", new DoubleStackVerb());
+        registerVerb("lapsus", new DropItemVerb());
+        registerVerb("lineus", new VectorBetweenStackVerb());
+        registerVerb("conjuro", new ConjureVerb());
+        registerVerb("impetum", new TargetVerb());
+        registerVerb("usus", new UseVerb());
+        registerVerb("uro", new BurnVerb());
+        registerVerb("curare", new CureVerb());
+        registerVerb("volare", new EffectVerb(new MobEffectInstance(MobEffects.LEVITATION, 200)));
+        registerVerb("resistere", new EffectVerb(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200)));
+        registerVerb("volito", new EffectVerb(new MobEffectInstance(MobEffects.SLOW_FALLING, 200)));
+        registerVerb("moror", new DelayVerb(1));
+        registerVerb("quinmoror", new DelayVerb(5));
+        registerVerb("decimoror", new DelayVerb(10));
+        registerVerb("totumoror", new DelayVerb(20));
+        registerVerb("verto", new ChangeOriginVerb());
         // Entity Nouns
-        register("me", new GenericEntityNoun<>("player", EntityType.PLAYER));
-        register("bovis", new GenericEntityNoun<>("cow", EntityType.COW));
-        register("porcus", new GenericEntityNoun<>("pig", EntityType.PIG));
-        register("pullum", new GenericEntityNoun<>("chicken", EntityType.CHICKEN));
-        register("ignis", new GenericEntityNoun<>("fireball", EntityType.FIREBALL, true));
-        register("sagitta", new GenericEntityNoun<>("arrow", EntityType.ARROW, true));
-        register("tnt", new GenericEntityNoun<>("tnt", EntityType.TNT, true));
-        register("res", new GenericEntityNoun<>("thing", Entity.class));
-        register("bestia", new GenericEntityNoun<>("animal", Animal.class));
-        register("monstrum", new GenericEntityNoun<>("monster", Monster.class));
+        register("me", new GenericEntityNoun<>(EntityType.PLAYER));
+        register("bovis", new GenericEntityNoun<>(EntityType.COW));
+        register("porcus", new GenericEntityNoun<>(EntityType.PIG));
+        register("pullum", new GenericEntityNoun<>(EntityType.CHICKEN));
+        register("ignis", new GenericEntityNoun<>(EntityType.FIREBALL, true));
+        register("sagitta", new GenericEntityNoun<>(EntityType.ARROW, true));
+        register("tnt", new GenericEntityNoun<>(EntityType.TNT, true));
+        register("res", new GenericEntityNoun<>(Entity.class));
+        register("bestia", new GenericEntityNoun<>(Animal.class));
+        register("monstrum", new GenericEntityNoun<>(Monster.class));
 
         // Adjectives
-        register("prope", new NearbyAdjective("nearby"));
-        register("proxi", new NearestAdjective("nearest"));
+        register("prope", new NearbyAdjective());
+        register("proxi", new NearestAdjective());
         //register("quod", new EntityRaytraceAdjective("that_entity"));
-        register("hoc", new RaytraceAdjective("that_block"));
+        register("hoc", new RaytraceAdjective());
 
         // Direction Nouns
-        register("ceps", new DirectionNoun("forward", (cxt, object) -> object.getForward()));
-        register("retro", new DirectionNoun("backward", (cxt, object) -> object.getForward().reverse()));
-        register("sinis", new DirectionNoun("left", (cxt, object) -> object.getForward().yRot(-90)));
-        register("dex", new DirectionNoun("right", (cxt, object) -> object.getForward().yRot(90)));
-        register("supra", new DirectionNoun("up", (cxt, object) -> new Vec3(0,1,0)));
-        register("infra", new DirectionNoun("down", (cxt, object) -> new Vec3(0,-1,0)));
-        register("meceps", new DirectionNoun("my_forward", (cxt, object) -> cxt.playerCaster.getForward()));
-        register("meretro", new DirectionNoun("my_backward", (cxt, object) -> cxt.playerCaster.getForward().reverse()));
-        register("mesinis", new DirectionNoun("my_left", (cxt, object) -> cxt.playerCaster.getForward().yRot(-90)));
-        register("medex", new DirectionNoun("my_right", (cxt, object) -> cxt.playerCaster.getForward().yRot(90)));
+        register("ceps", new DirectionNoun((cxt, object) -> object.getForward()));
+        register("retro", new DirectionNoun((cxt, object) -> object.getForward().reverse()));
+        register("sinis", new DirectionNoun((cxt, object) -> object.getForward().yRot(-90)));
+        register("dex", new DirectionNoun((cxt, object) -> object.getForward().yRot(90)));
+        register("supra", new DirectionNoun((cxt, object) -> new Vec3(0,1,0)));
+        register("infra", new DirectionNoun((cxt, object) -> new Vec3(0,-1,0)));
+        register("meceps", new DirectionNoun((cxt, object) -> cxt.playerCaster.getForward()));
+        register("meretro", new DirectionNoun((cxt, object) -> cxt.playerCaster.getForward().reverse()));
+        register("mesinis", new DirectionNoun((cxt, object) -> cxt.playerCaster.getForward().yRot(-90)));
+        register("medex", new DirectionNoun((cxt, object) -> cxt.playerCaster.getForward().yRot(90)));
 
         // Block Nouns
-        register("cubus", new BlockNoun<>("block", BlockPos.class));
+        register("cubus", new BlockNoun<>());
+        register("origo", new BlockNoun<>());
 
         // Stack Nouns
-        register("novus", new StackNoun<>("firstmemory", (stack) -> List.of(stack.removeFirst())));
-        register("memoria", new StackNoun<>("lastmemory", (stack) -> List.of(stack.removeLast())));
-        register("memorium", new StackNoun<>("memories", (stack) -> {
+        register("novus", new StackNoun<>((stack) -> List.of(stack.removeFirst())));
+        register("memoria", new StackNoun<>((stack) -> List.of(stack.removeLast())));
+        register("memorium", new StackNoun<>((stack) -> {
             List<Object> list = new ArrayList<>(stack);
             stack.clear();
             return list;

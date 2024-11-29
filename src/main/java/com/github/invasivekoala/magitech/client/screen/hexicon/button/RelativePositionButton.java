@@ -1,6 +1,9 @@
 package com.github.invasivekoala.magitech.client.screen.hexicon.button;
 
+import com.github.invasivekoala.magitech.client.screen.hexicon.ButtonConnection;
 import com.github.invasivekoala.magitech.client.screen.hexicon.HexiconScreen;
+import com.github.invasivekoala.magitech.client.screen.hexicon.HexiconTabRegistry;
+import com.github.invasivekoala.magitech.client.screen.hexicon.entries.HexiconBookScreen;
 import com.github.invasivekoala.magitech.events.ClientEvents;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,23 +12,32 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Set;
+
 public class RelativePositionButton extends Button {
     private final ItemStack toDisplay;
     public final int lockedXPos, lockedYPos;
     public HexiconScreen screen;
-
-
-
-
     public final String entryId;
+    private final Set<ButtonConnection> connections;
+
+
     public RelativePositionButton(String entryId, int pX, int pY, ItemStack toDisplay) {
         super(pX, pY, 24, 24, TextComponent.EMPTY, (b) -> {});
         lockedXPos = pX;
         lockedYPos = pY;
         this.entryId = entryId;
         this.toDisplay = toDisplay;
+        connections = HexiconTabRegistry.ENTRIES.get(entryId).connectsTo;
     }
 
+    @Override
+    public void onPress() {
+        if (entryId == null || HexiconTabRegistry.ENTRIES.containsKey(entryId)){
+            screen.onClose();
+            ClientEvents.getClient().setScreen(new HexiconBookScreen(screen, HexiconTabRegistry.ENTRIES.get(entryId)));
+        }
+    }
 
     @Override
     public void renderButton(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
@@ -42,7 +54,12 @@ public class RelativePositionButton extends Button {
 
         // Render item on top
         if (toDisplay != null){
+
             ClientEvents.getClient().getItemRenderer().renderGuiItem(toDisplay, this.x+4, this.y+4);
+        }
+        // Render connections
+        for (ButtonConnection connection : connections){
+            connection.render(this, pPoseStack);
         }
 
     }

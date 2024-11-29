@@ -22,13 +22,12 @@ public abstract class Word {
     }
 
 
-    public final String registryName;
+    public String registryName;
     public final Types classification;
-    public Word(String registryName){
-        this(registryName, Types.ENTITY);
+    public Word(){
+        this(Types.ENTITY);
     }
-    public Word(String registryName, Types words){
-        this.registryName = registryName;
+    public Word(Types words){
         classification = words;
     }
 

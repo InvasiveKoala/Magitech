@@ -10,8 +10,8 @@ import java.util.function.BiFunction;
 
 public class DirectionNoun extends NounWord<Vec3> {
     private final BiFunction<SentenceContext, Entity, Vec3> direction;
-    public DirectionNoun(String id, BiFunction<SentenceContext, Entity, Vec3> dir) {
-        super(id, Types.DIRECTION);
+    public DirectionNoun(BiFunction<SentenceContext, Entity, Vec3> dir) {
+        super(Types.DIRECTION);
         direction = dir;
     }
 

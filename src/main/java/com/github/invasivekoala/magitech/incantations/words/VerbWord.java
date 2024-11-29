@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class VerbWord extends Word{
 
-    public VerbWord(String id) {
-        super(id);
+    public VerbWord() {
+        super();
     }
 
     public abstract boolean effect(SentenceContext context) throws IncantationException;

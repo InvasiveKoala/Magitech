@@ -12,10 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class NearestAdjective extends AdjectiveWord implements IEntityAdjective, IBlockAdjective {
-    public NearestAdjective(String id) {
-        super(id);
-    }
-
 
     @SuppressWarnings("unchecked")
     @Override

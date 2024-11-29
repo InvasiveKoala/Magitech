@@ -13,9 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 
 public class BloomVerb extends VerbWord {
-    public BloomVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

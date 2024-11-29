@@ -9,9 +9,6 @@ import net.minecraft.world.entity.LivingEntity;
 import java.util.List;
 
 public class DrainVerb extends VerbWord {
-    public DrainVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

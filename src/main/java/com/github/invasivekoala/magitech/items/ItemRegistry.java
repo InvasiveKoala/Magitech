@@ -4,6 +4,7 @@ import com.github.invasivekoala.magitech.Magitech;
 import com.github.invasivekoala.magitech.entities.EntityRegistry;
 import com.github.invasivekoala.magitech.items.aicores.BrainItem;
 import com.github.invasivekoala.magitech.items.aicores.WanderAiCore;
+import com.github.invasivekoala.magitech.items.parchment.ParchmentItem;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.CreativeModeTab;
@@ -34,6 +35,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> WANDER_AI_CORE = ITEMS.register("wander_ai_core",
             () -> new WanderAiCore(defaultProperties().stacksTo(64)));
     public static final RegistryObject<Item> BLANK_AI_CORE = register("blank_ai_core");
+    public static final RegistryObject<Item> SHADEINK = register("shadeink");
+    public static final RegistryObject<Item> SPELL_PARCHMENT = ITEMS.register("spell_parchment",
+            () -> new ParchmentItem(defaultProperties()));
     public static final RegistryObject<Item> BROOMSTICK = ITEMS.register("broomstick",
             () -> new BroomItem(defaultProperties().stacksTo(1)));
     public static final RegistryObject<Item> HEXICON = ITEMS.register("hexicon",

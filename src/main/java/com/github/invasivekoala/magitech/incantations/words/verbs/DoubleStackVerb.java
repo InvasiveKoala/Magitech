@@ -9,9 +9,6 @@ import java.util.Deque;
 import java.util.List;
 
 public class DoubleStackVerb extends VerbWord {
-    public DoubleStackVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

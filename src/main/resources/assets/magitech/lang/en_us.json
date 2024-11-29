@@ -1,9 +1,12 @@
 {
+  "itemGroup.magitech": "Magitech",
   "item.magitech.clockwork_spawn_egg": "Clockwork Spawn Egg",
   "item.magitech.crystallized_shadow": "Crystallized Shadow",
   "item.magitech.raw_shadow": "Raw Shadow",
   "item.magitech.broomstick": "Broomstick",
   "item.magitech.hexicon": "Hexicon",
+  "item.magitech.shadeink": "Shadeink",
+  "item.magitech.spell_parchment": "Incantation Parchment",
   "entity.magitech.broomstick": "Broomstick",
   "gui.magitech.braintitle": "AI Brain",
   "gui.magitech.craftbrain": "Craft",
@@ -14,8 +17,13 @@
 
 
 
+  "page.magitech.intro_witchcraft_page1": "Hello! Welcome to the new cool guidebook",
+  "page.magitech.intro_witchcraft_page2": "It's made from scratch!AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "page.magitech.intro_witchcraft_page3": "Isn't that sick?? Hello?? AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+
   "comment": "CURRENTLY, TRANSLATIONS OF SPELL WORDS FOR OTHER LANGUAGES DO NOT WORK",
   "": "These are the latin translations of words which you use to cast spells. Don't change these unless your language does not have access to English characters.",
   "word.magitech.wilt": "mori",
-  "word.magitech.player": "me"
+  "word.magitech.player": "me",
+  "magitech.button.parse_parchment": "Save"
 }

@@ -8,12 +8,10 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,14 +20,14 @@ public class HexiconScreen extends Screen {
 
 
     public static final ResourceLocation HEXICON_LOCATION = new ResourceLocation(Magitech.MOD_ID, "textures/gui/hexicon.png");
-    public static final int screenWidth = 288+64, screenHeight = 255+64, imageWidth = 512, imageHeight=320;
+    public static final int screenWidth = 288+64, screenHeight = 320, imageWidth = 576, imageHeight=320;
 
 
 
     Set<RelativePositionButton> currentWidgetsWithinTab = new HashSet<>();
     Set<AbstractWidget> currentWidgetsOutsideTab = new HashSet<>();
 
-    public double scrollingXPos = 0, scrollingYPos = 0;
+    public static double scrollingXPos = 0, scrollingYPos = 0;
     public static String currentSelectedTab = "introduction";
     public TabButton currentSelectedButton;
 
@@ -37,6 +35,13 @@ public class HexiconScreen extends Screen {
 
     public HexiconScreen() {
         super(new TextComponent("Hexicon"));
+
+
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 
     @Override
@@ -50,9 +55,10 @@ public class HexiconScreen extends Screen {
         this.maxXMouseBound = x + screenWidth;
         this.maxYMouseBound = y +screenHeight;
 
+
         int i = 0;
-        currentWidgetsOutsideTab.add(addRenderableWidget(new TabButton(x-31, y + (32 * i++), "introduction", this)));
-        currentWidgetsOutsideTab.add(addRenderableWidget(new TabButton(x-31, y + (32 * i++), "incantations", this)));
+        currentWidgetsOutsideTab.add(addRenderableWidget(new TabButton(x - 63, y + (48 * i++), "introduction", this)));
+        currentWidgetsOutsideTab.add(addRenderableWidget(new TabButton(x - 63, y + (48 * i++), "incantations", this)));
         //addRenderableWidget(new RelativePositionButton(this, -i, i, Items.COAL.getDefaultInstance()));
         //addRenderableWidget(new RelativePositionButton(this, 0, 0, Items.DIAMOND.getDefaultInstance()));
         //addRenderableWidget(new RelativePositionButton(this, i, 0, ItemRegistry.CRYSTALLIZED_SHADOW.get().getDefaultInstance()));
@@ -81,7 +87,7 @@ public class HexiconScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, HEXICON_LOCATION);
-        blit(pPoseStack, x, y, 0, 1, screenWidth, screenHeight, imageWidth, imageHeight);
+        blit(pPoseStack, x, y, 0, 0, screenWidth, screenHeight, imageWidth, imageHeight);
         renderWidgetsOutsideTab(pPoseStack, pMouseX,pMouseY,pPartialTick);
     }
 
@@ -108,16 +114,23 @@ public class HexiconScreen extends Screen {
         scrollingXPos=0; // reset position
         scrollingYPos=0;
     }
+
+    @Override
+    public void onClose() {
+        currentWidgetsOutsideTab.clear();
+        currentWidgetsWithinTab.clear();
+        renderables.clear();
+        minecraft.setScreen(null);
+    }
+
     public static HexiconTabInfo getTab(String id){
         return HexiconTabRegistry.TABS.get(id);
     }
 
-    public void addWidgetsWithinTab(Set<RelativePositionButton> button){
-        currentWidgetsWithinTab.addAll(button);
-        button.forEach((b) -> {
-            b.screen = this;
-            addRenderableWidget(b);
-        });
+    public void addWidgetWithinTab(RelativePositionButton button){
+        currentWidgetsWithinTab.add(button);
+        button.screen = this;
+        addRenderableWidget(button); // Not needed anymore (i think)
     }
 
     @Override

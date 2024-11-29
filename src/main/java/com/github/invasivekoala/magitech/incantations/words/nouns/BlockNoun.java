@@ -4,10 +4,8 @@ import com.github.invasivekoala.magitech.incantations.words.NounWord;
 import net.minecraft.core.BlockPos;
 
 public class BlockNoun<T extends BlockPos> extends NounWord<T> {
-    private final Class<T> clazz;
-    public BlockNoun(String id, Class<T> block) {
-        super(id, Types.BLOCK);
-        clazz=block;
+    public BlockNoun() {
+        super(Types.BLOCK);
     }
 
 

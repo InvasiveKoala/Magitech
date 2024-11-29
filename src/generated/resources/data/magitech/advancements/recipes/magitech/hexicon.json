@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "magitech:hexicon"
+    ]
+  },
+  "criteria": {
+    "has_raw_shadow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "magitech:raw_shadow"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "magitech:hexicon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_shadow",
+      "has_the_recipe"
+    ]
+  ]
+}

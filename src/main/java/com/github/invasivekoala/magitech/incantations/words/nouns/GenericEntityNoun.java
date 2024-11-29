@@ -10,17 +10,17 @@ public class GenericEntityNoun<T extends Entity> extends NounWord<T> {
     private final Class<T> entityClass;
     private final boolean conjurable;
 
-    public GenericEntityNoun(String id, EntityType<T> entity) {
-        this(id,entity,null, false);
+    public GenericEntityNoun(EntityType<T> entity) {
+        this(entity,null, false);
     }
-    public GenericEntityNoun(String id, EntityType<T> entity, boolean conjurable) {
-        this(id,entity,null, conjurable);
+    public GenericEntityNoun(EntityType<T> entity, boolean conjurable) {
+        this(entity,null, conjurable);
     }
-    public GenericEntityNoun(String id, Class<T> entity) {
-        this(id,null, entity, false);
+    public GenericEntityNoun(Class<T> entity) {
+        this(null, entity, false);
     }
-    public GenericEntityNoun(String id, EntityType<T> entity, Class<T> clazz,  boolean conjurable) {
-        super(id, Types.ENTITY);
+    public GenericEntityNoun(EntityType<T> entity, Class<T> clazz,  boolean conjurable) {
+        super(Types.ENTITY);
         type = entity;
         this.entityClass= (clazz != null)? clazz : (Class<T>) entity.getBaseClass();
         this.conjurable = conjurable;

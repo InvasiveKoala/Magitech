@@ -17,9 +17,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class RaytraceAdjective extends AdjectiveWord implements IBlockAdjective, IEntityAdjective {
-    public RaytraceAdjective(String id) {
-        super(id);
-    }
 
     // Should always be last
     @Override

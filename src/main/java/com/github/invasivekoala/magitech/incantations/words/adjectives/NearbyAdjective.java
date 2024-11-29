@@ -2,19 +2,13 @@ package com.github.invasivekoala.magitech.incantations.words.adjectives;
 
 import com.github.invasivekoala.magitech.incantations.SentenceContext;
 import com.github.invasivekoala.magitech.incantations.words.AdjectiveWord;
-import com.github.invasivekoala.magitech.incantations.words.NounWord;
 import com.github.invasivekoala.magitech.incantations.words.nouns.GenericEntityNoun;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class NearbyAdjective extends AdjectiveWord implements IEntityAdjective, IBlockAdjective {
-    public NearbyAdjective(String id) {
-        super(id);
-    }
+public class NearbyAdjective extends AdjectiveWord implements IEntityAdjective {
 
 
     @Override
@@ -25,7 +19,9 @@ public class NearbyAdjective extends AdjectiveWord implements IEntityAdjective, 
             return cxt.playerCaster.getLevel().getEntitiesOfClass(noun.nounClass(cxt), AABB.ofSize(cxt.location, 10, 10, 10), currentList::contains);
     }
 
-    @Override
+    // This is just way too laggy
+
+    /*@Override
     public List<BlockPos> narrowBlockDown(List<BlockPos> currentList, SentenceContext cxt, NounWord<BlockPos> noun) {
         boolean doWeCareAboutList = currentList.size() > 0;
         List<BlockPos> poses = new ArrayList<>();
@@ -37,7 +33,7 @@ public class NearbyAdjective extends AdjectiveWord implements IEntityAdjective, 
             }
         });
         return poses;
-    }
+    }*/
 
     // Should always be first.
     @Override

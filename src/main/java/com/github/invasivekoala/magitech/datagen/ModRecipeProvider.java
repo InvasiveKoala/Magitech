@@ -5,6 +5,7 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
@@ -23,6 +24,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_diamond", inventoryTrigger(ItemPredicate.Builder.item().of(Items.DIAMOND).build()))
                 .requires(Items.DIAMOND)
                 .save(recipe);
+        ShapedRecipeBuilder.shaped(ItemRegistry.HEXICON.get())
+                .unlockedBy("has_raw_shadow", inventoryTrigger(ItemPredicate.Builder.item().of(ItemRegistry.RAW_SHADOW.get()).build()))
+                .define('/', ItemRegistry.RAW_SHADOW.get())
+                .define('b', Items.BOOK)
+                .pattern(" / ")
+                .pattern("/b/")
+                .pattern(" / ").save(recipe);
+
 
 
     }

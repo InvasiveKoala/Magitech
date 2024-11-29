@@ -9,9 +9,6 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.List;
 
 public class ClearStackVerb extends VerbWord {
-    public ClearStackVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

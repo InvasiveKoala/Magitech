@@ -14,9 +14,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class UseVerb extends VerbWord {
-    public UseVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

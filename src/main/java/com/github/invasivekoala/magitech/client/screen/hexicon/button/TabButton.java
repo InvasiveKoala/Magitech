@@ -11,7 +11,7 @@ public class TabButton extends Button {
     public final HexiconScreen screen;
     public boolean isPressed;
     public TabButton(int pX, int pY, String tabId, HexiconScreen screen) {
-        super(pX, pY, 32, 16, TextComponent.EMPTY, (b) -> {
+        super(pX, pY, 64, 32, TextComponent.EMPTY, (b) -> {
             TabButton but = ((TabButton) b);
             but.screen.switchTab(HexiconScreen.getTab(tabId), false);
             if (but.screen.currentSelectedButton != null) // This should be done within the switchtab method!! but idc
@@ -30,11 +30,8 @@ public class TabButton extends Button {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, HexiconScreen.HEXICON_LOCATION);
         int i = getYImage(isPressed) - 1;
-        blit(pPoseStack, this.x, this.y, 352, 48 + 16 * i, this.width, this.height, HexiconScreen.imageWidth, HexiconScreen.imageHeight);
+        blit(pPoseStack, this.x, this.y, 352, 48 + 32 * i, this.width, this.height, HexiconScreen.imageWidth, HexiconScreen.imageHeight);
     }
 
-    @Override
-    public void renderToolTip(PoseStack pPoseStack, int pMouseX, int pMouseY) {
-        super.renderToolTip(pPoseStack, pMouseX, pMouseY);
-    }
+
 }

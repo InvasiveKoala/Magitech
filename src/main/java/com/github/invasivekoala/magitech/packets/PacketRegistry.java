@@ -22,11 +22,17 @@ public final class PacketRegistry {
         CHANNEL.messageBuilder(ClientboundDropItemPacket.class, i++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(ClientboundDropItemPacket::encode).decoder(ClientboundDropItemPacket::decode)
                 .consumer(ClientboundDropItemPacket::handle).add();
+        CHANNEL.messageBuilder(ServerboundEditParchmentPacket.class, i++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(ServerboundEditParchmentPacket::encode).decoder(ServerboundEditParchmentPacket::decode)
+                .consumer(ServerboundEditParchmentPacket::handle).add();
     }
 
 
     public static <MSG> void sendTo(MSG message, ServerPlayer player)
     {
         CHANNEL.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+    }
+    public  static <MSG> void sendToServer(MSG message){
+        CHANNEL.sendToServer(message);
     }
 }

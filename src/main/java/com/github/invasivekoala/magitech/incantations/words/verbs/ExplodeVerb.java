@@ -9,9 +9,6 @@ import net.minecraft.world.level.Explosion;
 import java.util.List;
 
 public class ExplodeVerb extends VerbWord {
-    public ExplodeVerb(String id) {
-        super(id);
-    }
 
     @Override
     public boolean effect(SentenceContext context) throws IncantationException {

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " / ",
+    "/b/",
+    " / "
+  ],
+  "key": {
+    "/": {
+      "item": "magitech:raw_shadow"
+    },
+    "b": {
+      "item": "minecraft:book"
+    }
+  },
+  "result": {
+    "item": "magitech:hexicon"
+  }
+}
